@@ -80,18 +80,25 @@ sickbeard.prototype.addShow = function(show, interface, from){
         var options = {
             hostname: prefs.hostname,
             port: prefs.port,
-            path: '/api/'+prefs.api_key+'/show.add/?identifier='+show.imdb+'&title='+encodeURIComponent(show.titles[0]),
+            path: '/api/'+prefs.api_key+'/?cmd=show.addnew&tvdbid='+show.tvdbid,
             headers: {
                 'user-agent': 'Woodhouse Bot - https://github.com/Woodhouse-bot/woodhouse'
             }
-        };
+        }, data = '';
 
         var req = http.get(options, function(res) {
             res.on('data', function (response) {
+                data += response
             });
 
             res.on('end', function() {
-                self.sendMessage(show.titles[0] + ' added', interface, from);
+                var obj = JSON.parse(data);
+
+                if (obj.result === 'success') {
+                    self.sendMessage(show.name + ' added', interface, from);
+                } else {
+                    self.sendMessage('There was an error adding the show. Message: ' + obj.message, interface, from);
+                }
             });
         }).on('error', function(e) {
             console.log('problem with request: ' + e.message);
