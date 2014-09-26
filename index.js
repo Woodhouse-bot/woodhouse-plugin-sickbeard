@@ -60,19 +60,25 @@ sickbeard.prototype.findShow = function(name, interface, from){
 
 sickbeard.prototype.checkShow = function(shows, interface, from){
     var self = this;
-    var show = shows.shift();
-    var message = 'Did you mean: ' + show.name + ' (First Aired: ' + show.first_aired + ') - http://thetvdb.com/?tab=series&id=' + show.tvdbid;
 
-    this.sendMessage(message, interface, from);
-    this.api.addYesNoQuestion(
-        from,
-        message,
-        function(){
-            self.addShow(show, interface, from);
-        },
-        function(){
-            self.checkShow(shows, interface, from)
-        })
+    if(shows.length > 0){
+        var show = shows.shift();
+        var message = 'Did you mean: ' + show.name + ' (First Aired: ' + show.first_aired + ') - http://thetvdb.com/?tab=series&id=' + show.tvdbid;
+
+        this.sendMessage(message, interface, from);
+        this.api.addYesNoQuestion(
+            from,
+            message,
+            function(){
+                self.addShow(show, interface, from);
+            },
+            function(){
+                self.checkShow(shows, interface, from)
+            }
+        );
+    } else {
+        this.sendMessage('No more results', interface, from);
+    }
 }
 
 sickbeard.prototype.addShow = function(show, interface, from){
