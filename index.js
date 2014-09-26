@@ -65,6 +65,7 @@ sickbeard.prototype.checkShow = function(shows, interface, from){
 
     this.sendMessage(message, interface, from);
     this.api.addYesNoQuestion(
+        from,
         message,
         function(){
             self.addShow(show, interface, from);
