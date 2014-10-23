@@ -16,7 +16,7 @@ var sickbeard = function(){
     },{
         name: 'api_key',
         type: 'text',
-        value: '8f986691927886816287f06e96388dfe'
+        value: ''
     }];
 }
 
