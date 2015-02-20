@@ -23,7 +23,7 @@ var sickbeard = function(){
 sickbeard.prototype.init = function(){
     var self = this;
 
-    this.listen('sickbeard add (.+?)', 'standard', function(from, interface, params){
+    this.listen('sickbeard add (:<tv show>.+?)', 'standard', function(from, interface, params){
         self.findShow(params[0], interface, from)
     });
 }
