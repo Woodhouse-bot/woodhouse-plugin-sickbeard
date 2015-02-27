@@ -66,7 +66,7 @@ sickbeard.prototype.checkShow = function(shows, interface, from){
         var message = 'Did you mean: ' + show.name + ' (First Aired: ' + show.first_aired + ') - http://thetvdb.com/?tab=series&id=' + show.tvdbid;
 
         this.sendMessage(message, interface, from);
-        this.api.addYesNoQuestion(
+        this.api.yesNo.addYesNoQuestion(
             from,
             message,
             function(){
